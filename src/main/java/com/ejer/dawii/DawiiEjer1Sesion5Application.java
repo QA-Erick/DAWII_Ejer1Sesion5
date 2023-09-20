@@ -6,8 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.ejer.dawii.controllers.ClienteController;
+import com.ejer.dawii.controllers.DetalleFacturaController;
 import com.ejer.dawii.controllers.FacturaController;
 import com.ejer.dawii.models.Cliente;
+import com.ejer.dawii.models.DetalleFactura;
 import com.ejer.dawii.models.Factura;
 
 @SpringBootApplication
@@ -18,7 +20,7 @@ public class DawiiEjer1Sesion5Application {
 	}
 
 	@Bean
-	public CommandLineRunner testMain(ClienteController clienteController, FacturaController facturaController) {
+	public CommandLineRunner testMain(ClienteController clienteController, FacturaController facturaController, DetalleFacturaController detFacController) {
 		return args -> {
 			Cliente cliente1 = new Cliente();
 			cliente1.setCliNom("Pedro Navaja");
@@ -36,6 +38,17 @@ public class DawiiEjer1Sesion5Application {
 			if (facturaController.registrarFactura(factura1) != null) {
 				System.out.println("Se registro la factura exitosamente!");
 			}
+			
+			DetalleFactura detFac1 = new DetalleFactura();
+			detFac1.setDetFacPro("Piedra afiladora");
+			detFac1.setDetFacCan(5);
+			detFac1.setDetFacPrc(35.0);
+			detFac1.setFactura(factura1);
+			
+			if (detFacController.registrarDetalleFactura(detFac1) != null) {
+				System.out.println("Se registro el detalle de factura exitosamente!");
+			}			
+			
 		};
 	}
 }
